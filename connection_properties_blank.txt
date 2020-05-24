@@ -1,0 +1,1 @@
+{"host": "ipaddress", "port": portnumber, "username": "username", "private_key": "path_to_private_key"}
