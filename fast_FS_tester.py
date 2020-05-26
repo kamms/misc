@@ -62,6 +62,7 @@ def test_speed(path, testfile_size_bytes):
             else:
                 failed+=1
 
+    # Finally delete the written junk file, and for good measure time that performance too.
     delete_start = process_time()
     os.remove(os.path.join(path, filename))
     delete_done = process_time()
