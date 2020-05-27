@@ -4,19 +4,18 @@ import argparse
 
 def test_speed(path, testfile_size_bytes):
     # First we will establish the prerequisites for testing. File name, size etc.
-    bytesize = testfile_size_bytes
     testfile_size_MB = testfile_size_bytes/1024/1024
     filename = 'pytestfile.bin'
 
     # Here we generate random bytes to test write and read speeds with, as well as later test content.
     # ran_number is how many different byte strings will be generated.
-    ran_number = 120
+    ran_number = 4
     random_bytestrs = [os.urandom(4096) for i in range(0, ran_number)]
-    iterations = int(testfile_size_bytes/(4096*len(random_bytestrs)))
+    iterations = int(testfile_size_bytes/(4096*ran_number))
 
-    # since file size can be not divisible by 3096, the leftovers will be assigned to last_bytestr
-    last_bytestr = os.urandom(testfile_size_bytes%(len(random_bytestrs)*4096))
-
+    # since file size can be not divisible by 4096, the leftovers will be assigned to last_bytestr
+    last_bytestr = os.urandom(testfile_size_bytes%(ran_number*4096))
+    
     with open(os.path.join(path, filename),'wb') as fil:
         write_start = process_time()
         # write all data to the file. each bytestr in sequence, every iteration.
@@ -115,7 +114,7 @@ for i in range(0, args.iterations):
     data.append([i, args.test_path, test_size])
     data[-1].extend(results)
     if args.verbose:
-        print(f'Iteration {i} complete.')
+        print(f'Iteration {i+1} complete.')
 
 if args.verbose:
     print(f'Writing output file: {args.output_name}')
